@@ -21,6 +21,33 @@ public class DatabaseCustomerDAO implements IDao<Customer> {
     public void connect() throws SQLException {
         server.connect();
     }
+    public int getCustomersIdByName(Customer customer){
+        Statement statement = null;
+        int id = 0;
+        try {
+            this.connect();
+            statement = server.returnStatement();
+            ResultSet resultSet = statement.executeQuery("select * from customers where name = \"" +
+                customer.getName() + "\";");
+            while (resultSet.next()) {
+                id = resultSet.getInt(resultSet.findColumn("id"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+       return id;
+    }
 
     public List<Customer> get() {
         Statement statement = null;
@@ -28,14 +55,21 @@ public class DatabaseCustomerDAO implements IDao<Customer> {
         try {
             this.connect();
             statement = server.returnStatement();
-            ResultSet resultSet = statement.executeQuery("select * from customers;");
+            ResultSet resultSet = statement.executeQuery("select * from customers left join surveys on " +
+                    "surveys.id = customers.id;");
             while (resultSet.next()) {
                 int id = resultSet.getInt(resultSet.findColumn("id"));
                 String name = resultSet.getString(resultSet.findColumn("name"));
                 int phone= resultSet.getInt(resultSet.findColumn("phone_no"));
                 String address = resultSet.getString(resultSet.findColumn("address"));
-
-                list.add(new Customer(id, name, phone, address ));
+                String q1 = resultSet.getString(resultSet.findColumn("question1"));
+                String q2 = resultSet.getString(resultSet.findColumn("question2"));
+                String q3 = resultSet.getString(resultSet.findColumn("question3"));
+                Customer customer = new Customer(id, name, phone, address);
+                if(q1!= null){
+                    customer.setSurvey(new Survey(customer.getId(),q1,q2,q3));
+                }
+                list.add(customer);
             }
 
         } catch (SQLException e) {
@@ -59,12 +93,17 @@ public class DatabaseCustomerDAO implements IDao<Customer> {
         try {
             this.connect();
             statement1 = server.returnStatement();
-
             statement1.executeUpdate("insert into customers (name, phone_no, address) value" +
                     " (\"" + customer.getName() +
                     "\",\"" + customer.getPhoneNo() +
                     "\",\"" + customer.getAddress() + "\");");
 
+            if (customer.getSurvey() != null){
+                statement1.executeUpdate("insert into surveys (id, question1, question2, question3) value" +
+                        " (" + getCustomersIdByName(customer) + " , \"" +customer.getSurvey().getQuestion1()
+                        + "\", \"" + customer.getSurvey().getQuestion2() + "\", \"" +
+                        customer.getSurvey().getQuestion3() + "\" );");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();

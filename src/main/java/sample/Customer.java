@@ -8,12 +8,22 @@ public class Customer {
     private String name;
     private int phoneNo;
     private String address;
+    private Survey survey;
+
+
 
     public Customer(int id, String name, int phoneNo, String address) {
         this.id = id;
         this.name = name;
         this.phoneNo = phoneNo;
         this.address = address;
+    }
+    public Survey getSurvey() {
+        return survey;
+    }
+
+    public void setSurvey(Survey survey) {
+        this.survey = survey;
     }
 
     public int getId() {
@@ -50,11 +60,16 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
+        StringBuilder sb = new StringBuilder();
+        sb.append("Customer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", phoneNo=" + phoneNo +
-                ", address='" + address + '\'' +
-                '}';
+                ", address='" + address + '\'' );
+        if(survey != null){
+            sb.append(", survey='" + survey + '\'');
+        }
+        return sb.toString();
     }
+
 }
