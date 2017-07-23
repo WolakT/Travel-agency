@@ -147,8 +147,12 @@ public class DatabaseCustomerDAO implements IDao<Customer> {
         Statement statement1 = null;
         try {
             statement1 = server.returnStatement();
+            if(customer.getSurvey() != null){
+                statement1.executeUpdate("delete from surveys where id = " + customer.getId() + ";" );
+            }
 
-            statement1.executeUpdate("delete from customers where id = " + customer.getId());
+            statement1.executeUpdate("delete from customers where id = " + customer.getId() + ";");
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
