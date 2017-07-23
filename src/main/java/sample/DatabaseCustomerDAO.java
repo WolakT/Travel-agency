@@ -21,7 +21,38 @@ public class DatabaseCustomerDAO implements IDao<Customer> {
     public void connect() throws SQLException {
         server.connect();
     }
-    public int getCustomersIdByName(Customer customer){
+
+    public Customer getCustomerById(int id) {
+        Statement statement = null;
+        Customer customer = null;
+        try {
+            this.connect();
+            statement = server.returnStatement();
+            ResultSet resultSet = statement.executeQuery("select * from customers where id = " +
+                    id + ";");
+            while (resultSet.next()) {
+                String name = resultSet.getString(resultSet.findColumn("name"));
+                String address = resultSet.getString(resultSet.findColumn("address"));
+                int phoneNo = resultSet.getInt(resultSet.findColumn("phone_no"));
+                customer = new Customer(id, name, phoneNo, address);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        return customer;
+    }
+    public int getCustomerIdByName(Customer customer){
         Statement statement = null;
         int id = 0;
         try {
@@ -100,7 +131,7 @@ public class DatabaseCustomerDAO implements IDao<Customer> {
 
             if (customer.getSurvey() != null){
                 statement1.executeUpdate("insert into surveys (id, question1, question2, question3) value" +
-                        " (" + getCustomersIdByName(customer) + " , \"" +customer.getSurvey().getQuestion1()
+                        " (" + getCustomerIdByName(customer) + " , \"" +customer.getSurvey().getQuestion1()
                         + "\", \"" + customer.getSurvey().getQuestion2() + "\", \"" +
                         customer.getSurvey().getQuestion3() + "\" );");
             }

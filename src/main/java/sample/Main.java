@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static javafx.application.Application.launch;
@@ -27,7 +28,7 @@ public class Main extends Application  {
 
         launch(args);
 
-//        DatabaseServer server = new DatabaseServer("localhost", "travelagencydb", "travelagent", "pass123");
+        DatabaseServer server = new DatabaseServer("localhost", "travelagencydb", "travelagent", "pass123");
 //        DatabaseCustomerDAO customerDao = new DatabaseCustomerDAO(server);
 //        List<Customer> lst =  customerDao.get();
 //        for (Customer customer: lst ) {
@@ -53,6 +54,13 @@ public class Main extends Application  {
 //        server.close();
 //
 //        customerDao.close();
+
+        SoldTripsDAO tripsDAO = new SoldTripsDAO(server);
+        List<SoldTrips> list = new ArrayList<SoldTrips>();
+        list = tripsDAO.get();
+        for (SoldTrips trip : list) {
+            System.out.println(trip);
+        }
 
     }
 }
