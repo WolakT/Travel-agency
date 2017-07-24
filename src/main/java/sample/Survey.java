@@ -8,6 +8,7 @@ public class Survey {
     private String question1;
     private String question2;
     private String question3;
+    public Survey(){}
 
     public Survey(int id, String question1, String question2, String question3) {
         this.id = id;

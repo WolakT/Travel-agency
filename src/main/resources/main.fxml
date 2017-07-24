@@ -20,7 +20,8 @@
 
     <Label text="Phone number:"
            GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-
+    <TextField fx:id="phoneNo"
+               GridPane.columnIndex="1" GridPane.rowIndex="2"/>
     <Label text="Address"
            GridPane.columnIndex="0" GridPane.rowIndex="3"/>
 
@@ -29,21 +30,19 @@
     <Label text="Survey question 1"
            GridPane.columnIndex="0" GridPane.rowIndex="4"/>
 
-    <TextField fx:id="q1"
-            GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+    <ComboBox fx:id = "q1"
+              GridPane.columnIndex="1" GridPane.rowIndex="4"/>
     <Label text="Survey question 2"
            GridPane.columnIndex="0" GridPane.rowIndex="5"/>
 
-    <TextField fx:id="q2"
-            GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+    <ComboBox fx:id = "q2"
+              GridPane.columnIndex="1" GridPane.rowIndex="5"/>
     <Label text="Survey question 3"
            GridPane.columnIndex="0" GridPane.rowIndex="6"/>
 
-    <TextField fx:id="q3"
-            GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+    <ComboBox fx:id = "q3"
+              GridPane.columnIndex="1" GridPane.rowIndex="6"/>
 
-    <TextField fx:id="phoneNo"
-                   GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
 
     <HBox spacing="10" alignment="bottom_right"
@@ -54,5 +53,5 @@
 
     <Text fx:id="actiontarget"
           GridPane.columnIndex="0" GridPane.columnSpan="2"
-          GridPane.halignment="RIGHT" GridPane.rowIndex="8"/>
+          GridPane.halignment="RIGHT" GridPane.rowIndex="10"/>
 </GridPane>

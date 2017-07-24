@@ -119,7 +119,34 @@ public class DatabaseCustomerDAO implements IDao<Customer> {
         return list;
     }
 
-    public void add(Customer customer) {
+    public void addSurvey(Survey survey){
+        Statement statement1 = null;
+        try {
+            this.connect();
+
+
+                statement1.executeUpdate("insert into surveys (id, question1, question2, question3) value" +
+                        " (" + survey.getId() + " , \"" + survey.getQuestion1()
+                        + "\", \"" + survey.getQuestion2() + "\", \"" +
+                        survey.getQuestion3() + "\" );");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+
+            if (statement1 != null) {
+                try {
+                    statement1.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+    public int add(Customer customer) {
         Statement statement1 = null;
         try {
             this.connect();
@@ -148,7 +175,7 @@ public class DatabaseCustomerDAO implements IDao<Customer> {
                 }
             }
         }
-
+        return 0;
     }
 
     public void update(Customer customer) {

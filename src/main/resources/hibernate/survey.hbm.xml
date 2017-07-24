@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="sample.Survey" table="surveys">
+        <id name="id">
+            <generator class="identity"></generator>
+        </id>
+        <property name="question1" column="question1"></property>
+        <property name="question2" column="question2"></property>
+        <property name="question3" column="question3"></property>
+        <one-to-one name="survey" class="sample.Survey" >
+        </one-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,11 +1,17 @@
 package sample;
 
+import com.mysql.jdbc.Driver;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +32,40 @@ public class Main extends Application  {
 
     public static void main(String[] args) {
 
+
+        try {
+            DriverManager.registerDriver(new Driver());
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+
+        Configuration configuration = new Configuration();
+        configuration.configure(Main.class.getClassLoader().getResource("hibernate/hibernate.cfg.xml"));
+        SessionFactory factory = configuration.buildSessionFactory();
+        Session session = factory.openSession();
+
+        List<Customer> customers = (List<Customer>)session.createQuery("from Customer").list();
+        System.out.println("----------using hibernate-------------");
+        customers.forEach((user) -> {
+            System.out.println(user.toString());
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         launch(args);
 
-        DatabaseServer server = new DatabaseServer("localhost", "travelagencydb", "travelagent", "pass123");
+        DatabaseServer server = new DatabaseServer("localhost", "travelagencydb", "travelAgent", "pass123");
 //        DatabaseCustomerDAO customerDao = new DatabaseCustomerDAO(server);
 //        List<Customer> lst =  customerDao.get();
 //        for (Customer customer: lst ) {

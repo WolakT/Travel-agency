@@ -10,7 +10,9 @@ public class Customer {
     private String address;
     private Survey survey;
 
+    public Customer(){
 
+    }
 
     public Customer(int id, String name, int phoneNo, String address) {
         this.id = id;

@@ -12,9 +12,13 @@ import java.util.List;
  */
 public class SoldTripsDAO implements IDao<SoldTrips> {
     private DatabaseServer server;
+    private ClerkDAO clerkDAO;
+    private DatabaseCustomerDAO customerDAO;
 
     public SoldTripsDAO(DatabaseServer server) {
         this.server = server;
+        this.clerkDAO =  new ClerkDAO(server);
+        this.customerDAO = new DatabaseCustomerDAO(server);
     }
 
     public void connect() throws SQLException {
@@ -37,9 +41,11 @@ public class SoldTripsDAO implements IDao<SoldTrips> {
                 int idClerk= resultSet.getInt(resultSet.findColumn("id_clerk"));
                 int discount = resultSet.getInt(resultSet.findColumn("discount"));
                 Date startDate = resultSet.getDate(resultSet.findColumn("start_date"));
-                DatabaseCustomerDAO customerDAO = new DatabaseCustomerDAO(server);
                 Customer customer = customerDAO.getCustomerById(idCustomer);
-                list.add(new SoldTrips(id, discount, startDate, customer ));
+                Clerk clerk = clerkDAO.getClerkById(idClerk);
+                ClerkDAO clerkDAO = new ClerkDAO(server);
+
+                list.add(new SoldTrips(id, discount, startDate, customer, clerk  ));
             }
 
         } catch (SQLException e) {
@@ -58,8 +64,8 @@ public class SoldTripsDAO implements IDao<SoldTrips> {
         return list;
     }
 
-    public void add(SoldTrips soldTrips) {
-
+    public int add(SoldTrips soldTrips) {
+    return 0;
     }
 
     public void update(SoldTrips soldTrips) {

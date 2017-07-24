@@ -13,11 +13,11 @@ public class SoldTrips {
     private Customer customer;
     private Offer offer;
 
-    public SoldTrips(int id, int discount, Date startDate, Customer customer) {
+    public SoldTrips(int id, int discount, Date startDate, Customer customer, Clerk clerk) {
         this.id = id;
         this.discount = discount;
         this.startDate = startDate;
-//        this.clerk = clerk;
+        this.clerk = clerk;
         this.customer = customer;
 //        this.offer = offer;
     }
@@ -78,7 +78,7 @@ public class SoldTrips {
                 ", startDate=" + startDate +
 
                 ", customer=" + customer +
-
+                ", clerk =" + clerk +
                 '}';
     }
 }
