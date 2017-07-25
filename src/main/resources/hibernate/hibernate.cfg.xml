@@ -8,7 +8,8 @@
         <property name="connection.username">travelAgent</property>
         <property name="connection.password">pass123</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <mapping resource="hibernate/customer.hbm.xml"/>
-        <mapping resource="hibernate/survey.hbm.xml"/>
+        <!--<mapping resource="hibernate/customer.hbm.xml"/>-->
+        <mapping class="sample.Customer"/>
+        <mapping class="sample.Survey"/>
     </session-factory>
 </hibernate-configuration>

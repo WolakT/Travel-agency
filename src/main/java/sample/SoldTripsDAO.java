@@ -43,7 +43,7 @@ public class SoldTripsDAO implements IDao<SoldTrips> {
                 Date startDate = resultSet.getDate(resultSet.findColumn("start_date"));
                 Customer customer = customerDAO.getCustomerById(idCustomer);
                 Clerk clerk = clerkDAO.getClerkById(idClerk);
-                ClerkDAO clerkDAO = new ClerkDAO(server);
+
 
                 list.add(new SoldTrips(id, discount, startDate, customer, clerk  ));
             }

@@ -1,17 +1,27 @@
 package sample;
 
+import javax.persistence.*;
 /**
  * Created by RENT on 2017-07-21.
  */
+@Entity
+@Table(name = "customers")
 public class Customer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "name")
     private String name;
+    @Column(name = "phone_no")
     private int phoneNo;
+    @Column(name = "address")
     private String address;
+//    @OneToOne
+//    @JoinColumn(name = "id")
     private Survey survey;
 
     public Customer(){
-
     }
 
     public Customer(int id, String name, int phoneNo, String address) {

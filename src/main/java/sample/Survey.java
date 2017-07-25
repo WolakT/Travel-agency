@@ -1,10 +1,16 @@
 package sample;
 
+import javax.persistence.*;
 /**
  * Created by RENT on 2017-07-21.
  */
+@Entity
+@Table(name = "surveys")
 public class Survey {
+    @OneToOne
+    @JoinColumn(name = "id")
     private int id;
+
     private String question1;
     private String question2;
     private String question3;

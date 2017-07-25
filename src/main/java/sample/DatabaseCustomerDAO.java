@@ -2,6 +2,7 @@ package sample;
 
 
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -148,17 +149,28 @@ public class DatabaseCustomerDAO implements IDao<Customer> {
 
     public int add(Customer customer) {
         Statement statement1 = null;
+        PreparedStatement preparedStatement = null;
+        String query = "insert into customers (name, phone_no, address) value" +
+                " (\"" + customer.getName() +
+                "\",\"" + customer.getPhoneNo() +
+                "\",\"" + customer.getAddress() + "\");";
+        int result = 0 ;
         try {
             this.connect();
-            statement1 = server.returnStatement();
-            statement1.executeUpdate("insert into customers (name, phone_no, address) value" +
-                    " (\"" + customer.getName() +
-                    "\",\"" + customer.getPhoneNo() +
-                    "\",\"" + customer.getAddress() + "\");");
+            preparedStatement = server.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+            result = preparedStatement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+                try(ResultSet generatedKeys =preparedStatement.getGeneratedKeys()){
+                    if(generatedKeys.next()){
+                        result = generatedKeys.getInt(1);
+                    }
+                }
+
 
             if (customer.getSurvey() != null){
+                statement1 = server.returnStatement();
                 statement1.executeUpdate("insert into surveys (id, question1, question2, question3) value" +
-                        " (" + getCustomerIdByName(customer) + " , \"" +customer.getSurvey().getQuestion1()
+                        " (" + result + " , \"" +customer.getSurvey().getQuestion1()
                         + "\", \"" + customer.getSurvey().getQuestion2() + "\", \"" +
                         customer.getSurvey().getQuestion3() + "\" );");
             }
@@ -175,7 +187,7 @@ public class DatabaseCustomerDAO implements IDao<Customer> {
                 }
             }
         }
-        return 0;
+        return result;
     }
 
     public void update(Customer customer) {

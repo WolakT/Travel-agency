@@ -41,10 +41,11 @@ public class FormController implements Initializable {
             customerDAO.connect();
             Customer customer = new Customer(0, customerName.getText(), Integer.parseInt(phoneNo.getText()),
                     address.getText());
-            int id = customerDAO.add(customer);
             if(q1.getValue() != null){
-               // customer.setSurvey(new Survey(id ,q1.getValue(),q2.getValue(),q3.getValue()));
+                customer.setSurvey(new Survey(0 ,q1.getValue().toString(),q2.getValue().toString()
+                        ,q3.getValue().toString()));
             }
+            int id = customerDAO.add(customer);
 
             System.out.println(customerName.getText());
             actiontarget.setText("Added to database");

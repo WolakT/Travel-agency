@@ -39,20 +39,13 @@ public class Main extends Application  {
             e1.printStackTrace();
         }
 
-        Configuration configuration = new Configuration();
-        configuration.configure(Main.class.getClassLoader().getResource("hibernate/hibernate.cfg.xml"));
-        SessionFactory factory = configuration.buildSessionFactory();
-        Session session = factory.openSession();
 
-        List<Customer> customers = (List<Customer>)session.createQuery("from Customer").list();
-        System.out.println("----------using hibernate-------------");
-        customers.forEach((user) -> {
-            System.out.println(user.toString());
+        HibernateCustomerDAO hibernateCustomerDAO =new HibernateCustomerDAO("hibernate/hibernate.cfg.xml");
+        List<Customer> customers = hibernateCustomerDAO.get();
+        System.out.println("----------using hibernate annotations-------------");
+        customers.forEach((customer) -> {
+            System.out.println(customer.toString());
         });
-
-
-
-
 
 
 
@@ -66,16 +59,16 @@ public class Main extends Application  {
         launch(args);
 
         DatabaseServer server = new DatabaseServer("localhost", "travelagencydb", "travelAgent", "pass123");
-//        DatabaseCustomerDAO customerDao = new DatabaseCustomerDAO(server);
+        DatabaseCustomerDAO customerDao = new DatabaseCustomerDAO(server);
 //        List<Customer> lst =  customerDao.get();
 //        for (Customer customer: lst ) {
 //            System.out.println(customer);
 //        }
 
 //        Customer customer1 = new Customer(0, "Natasza Fabianska", 244125332, "Rzeszów");
-////        customer1.setSurvey(new Survey(customer1.getId(), "no", "yes", "no"));
-//        customerDao.add(customer1);
-
+//        customer1.setSurvey(new Survey(customer1.getId(), "no", "yes", "no"));
+//        int id = customerDao.add(customer1);
+//        System.out.println("Customers id is " + id);
 //        lst =  customerDao.get();
 //        for (Customer customer: lst ) {
 //            System.out.println(customer);
