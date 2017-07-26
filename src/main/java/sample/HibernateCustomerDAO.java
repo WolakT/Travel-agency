@@ -30,6 +30,11 @@ public class HibernateCustomerDAO implements IDao<Customer> {
 
     @Override
     public int add(Customer customer) {
+        Session session = factory.openSession();
+        session.save(customer);
+
+        session.close();
+
         return 0;
     }
 

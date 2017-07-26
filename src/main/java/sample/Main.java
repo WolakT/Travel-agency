@@ -17,7 +17,7 @@ import java.util.List;
 
 import static javafx.application.Application.launch;
 
-public class Main extends Application  {
+public class Main extends Application {
 //extends Application
     public void start(Stage stage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("main.fxml"));
@@ -46,6 +46,9 @@ public class Main extends Application  {
         customers.forEach((customer) -> {
             System.out.println(customer.toString());
         });
+
+        int num =hibernateCustomerDAO.add(new Customer(0,"Hibernate annotations", 234453234, "krakow"));
+        System.out.println("End of hibernate annotations");
 
 
 

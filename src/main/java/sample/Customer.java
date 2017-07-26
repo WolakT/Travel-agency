@@ -17,8 +17,8 @@ public class Customer {
     private int phoneNo;
     @Column(name = "address")
     private String address;
-//    @OneToOne
-//    @JoinColumn(name = "id")
+    @OneToOne
+    @JoinColumn(name = "id")
     private Survey survey;
 
     public Customer(){

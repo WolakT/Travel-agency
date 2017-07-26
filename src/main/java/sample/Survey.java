@@ -7,7 +7,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "surveys")
 public class Survey {
-    @OneToOne
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JoinColumn(name = "id")
     private int id;
 
