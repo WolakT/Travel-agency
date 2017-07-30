@@ -48,6 +48,7 @@ public class Main extends Application {
         });
 
         int num =hibernateCustomerDAO.add(new Customer(0,"Hibernate annotations", 234453234, "krakow"));
+        System.out.println(num);
         System.out.println("End of hibernate annotations");
 
 

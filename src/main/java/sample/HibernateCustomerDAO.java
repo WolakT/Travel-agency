@@ -2,6 +2,7 @@ package sample;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.util.List;
@@ -31,11 +32,13 @@ public class HibernateCustomerDAO implements IDao<Customer> {
     @Override
     public int add(Customer customer) {
         Session session = factory.openSession();
-        session.save(customer);
-
+        Transaction tx = null;
+        tx = session.beginTransaction();
+        Integer id = (Integer) session.save(customer);
+        tx.commit();
         session.close();
 
-        return 0;
+        return id;
     }
 
     @Override
